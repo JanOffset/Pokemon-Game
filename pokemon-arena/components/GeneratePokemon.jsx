@@ -30,8 +30,15 @@ export default function GeneratePokemon() {
                 baseStatTotal: data.stats.reduce((acc, curr) => acc + curr.base_stat, 0)
             };
 
-            if (previousPokemon) {
-                const currentPrimaryType = previousPokemon.types[0];
+            let defendingKing = previousPokemon;
+            if (!previousPokemon && currentPokemon) {
+                defendingKing = currentPokemon;
+            } else if (matchMessage === "NEW POKEMON WINS!") {
+                defendingKing = currentPokemon;
+            }
+
+            if (defendingKing) {
+                const currentPrimaryType = defendingKing.types[0];
                 const newPrimaryType = cleanPokemon.types[0];
                 if (currentPrimaryType === newPrimaryType) {
                     setMatchMessage("TYPE MATCH!")
@@ -52,7 +59,7 @@ export default function GeneratePokemon() {
                     } else setMatchMessage(`NO ADVANTAGE!`)
                 }
             }
-            setPreviousPokemon(currentPokemon);
+            setPreviousPokemon(defendingKing);
             setCurrentPokemon(cleanPokemon);
             console.log(currentPokemon);
             console.log(previousPokemon);

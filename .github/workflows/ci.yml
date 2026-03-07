@@ -9,6 +9,9 @@ on:
 jobs:
   verify-strength:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./pokemon-arena
 
     steps:
       - name: Checkout code
@@ -19,6 +22,7 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: './pokemon-arena/package-lock.json'
 
       - name: Install dependencies
         run: npm ci

@@ -1,16 +1,18 @@
 import { useState } from "react"
 import GenerateId from "../utilities/GenerateId";
 import PokemonCard from "./PokemonCard";
+import Scoreboard from "./Scoreboard";
+import BattleHistory from "./BattleHistory";
 
 export default function GeneratePokemon() {
     const [previousWins, setPreviousWins] = useState(0);
     const [newWins, setNewWins] = useState(0);
     const [currentPokemon, setCurrentPokemon] = useState(null);
     const [previousPokemon, setPreviousPokemon] = useState(null);
-
+    const [battleHistory, setBattleHistory] = useState([]);
     const [typeMatches, setTypeMatches] = useState(0);
     const [matchMessage, setMatchMessage] = useState("");
-
+    const [isLoading, setIsLoading] = useState(false)
     const handlePokemon = async (e) => {
         e.preventDefault();
         const id = Number(GenerateId());
@@ -53,9 +55,11 @@ export default function GeneratePokemon() {
                     if (strongAgainst.includes(currentPrimaryType)) {
                         setMatchMessage(`NEW POKEMON WINS!`)
                         setNewWins((prev) => prev + 1)
+                        setBattleHistory((prev) => [...prev, defendingKing].slice(-10))
                     } else if (weakAgainst.includes(currentPrimaryType)) {
                         setMatchMessage(`PREVIOUS POKEMON WINS!`)
                         setPreviousWins((prev) => prev + 1)
+                        setBattleHistory((prev) => [...prev, cleanPokemon].slice(-10))
                     } else setMatchMessage(`NO ADVANTAGE!`)
                 }
             }
@@ -77,9 +81,7 @@ export default function GeneratePokemon() {
             Generate Pokemon
         </button>
         
-        <div>
-            Type matches:{typeMatches} / Previous wins:{previousWins} / New wins:{newWins}
-        </div>
+        <Scoreboard typeMatches={typeMatches} newWins={newWins} previousWins={previousWins}/>
 
         <div>
         {matchMessage && (
@@ -91,6 +93,8 @@ export default function GeneratePokemon() {
             <PokemonCard title="King" pokemon={previousPokemon} emptyMessage="Empty throne."/>            
             <PokemonCard title="Opponent" pokemon={currentPokemon} emptyMessage="Waiting for opponent..."/>
         </div>
+
+        <BattleHistory history={battleHistory}/>
     </div>
     )
 }

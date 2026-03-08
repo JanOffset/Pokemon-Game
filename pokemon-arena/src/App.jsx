@@ -1,12 +1,14 @@
-import { useState } from 'react'
-import GeneratePokemon from '../components/GeneratePokemon'
+import ArenaPage from '../components/ArenaPage'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './index.css'
 
 function App() {
   return (
-    <>
-      <GeneratePokemon/>
-    </>
+    <Router>
+      <Routes>
+        <Route path='/' element={<ArenaPage />}/>
+      </Routes>
+    </Router>
   )
 }
 

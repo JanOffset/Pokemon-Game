@@ -4,14 +4,15 @@ import Scoreboard from "./Scoreboard";
 import BattleHistory from "./BattleHistory";
 
 export default function ArenaPage() {
-    const { currentPokemon, previousPokemon, stats, matchMessage, history, isLoading, startBattle } = usePokemonBattle();
+    const { currentPokemon, previousPokemon, stats, matchMessage, history, isBattling, isLoading, startBattle } = usePokemonBattle();
 
+    const memoizedStats = useMemo(() => stats, [stats.typeMatches, stats.newWins, stats.previousWins]);
     return (
         <div className="p-10 text-center">
-            <Scoreboard {...stats} />
+            <Scoreboard {...memoizedStats} />
             
             <button onClick={startBattle} className="btn" disabled={isLoading}>
-                {isLoading ? "Summoning..." : "Generate Pokemon"}
+                {isLoading ? "Summoning..." : isBattling ? "BATTLE IN PROGRESS..." : "Generate Pokemon"}
             </button>
 
             {matchMessage && <h2 className="match-msg">{matchMessage}</h2>}

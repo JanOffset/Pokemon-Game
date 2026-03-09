@@ -23,17 +23,16 @@ export const apiFetchPokemon = async (id) => {
 }
 
 export const fetchTypeAdvantage = async (type) => {
-
+    try {
         const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
         if (!response.ok) throw new Error('API Error')
-        const data = await typeRes.json();
+        const data = await response.json();
 
         return {
-            strongAgainst : data.damage_relations.double_damage_to.map(t => t.name),
-            weakAgainst : data.damage_relations.double_damage_from.map(t => t.name)
+            strongAgainst: data.damage_relations.double_damage_to.map(t => t.name),
+            weakAgainst: data.damage_relations.double_damage_from.map(t => t.name)
         }
-    try {
-        
+
     } catch (err) {
         console.log(err.message)
         throw new Error("Error fetching advantage type")

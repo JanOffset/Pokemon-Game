@@ -76,7 +76,7 @@ export function usePokemonBattle() {
                     setMatchMessage(`KING HITS FOR ${dmg} DMG!`);
                     turn = "challenger";
                 } else {
-                    const dmg = calculateDamage(defendingKing.attack ,(await newPokemon).defense, chalMult)
+                    const dmg = calculateDamage(defendingKing.attack ,newPokemon.defense, chalMult)
                     kHp -= dmg;
                     setPreviousPokemon(prev => ({ ...prev, hp: Math.max(0, kHp) }));
                     setMatchMessage(`CHALLENGER HITS FOR ${dmg} DMG!`);

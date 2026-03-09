@@ -2,6 +2,7 @@ import { usePokemonBattle } from "../hooks/usePokemonBattle";
 import PokemonCard from "./PokemonCard";
 import Scoreboard from "./Scoreboard";
 import BattleHistory from "./BattleHistory";
+import { useMemo } from "react";
 
 export default function ArenaPage() {
     const { currentPokemon, previousPokemon, stats, matchMessage, history, isBattling, isLoading, startBattle } = usePokemonBattle();

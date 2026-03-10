@@ -23,9 +23,7 @@ export function usePokemonBattle() {
             if (!newPokemon) throw new Error("Error fetching new pokemon when starting battle")
 
             let defendingKing = previousPokemon;
-            if (!previousPokemon && currentPokemon) {
-                defendingKing = currentPokemon;
-            } else if (matchMessage.includes("NEW")) {
+            if (matchMessage.includes("NEW")) {
                 defendingKing = currentPokemon;
             }
 
